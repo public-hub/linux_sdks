@@ -1,0 +1,90 @@
+=======================================
+ Scandit Barcode Scanner SDK for Linux
+=======================================
+
+Supported Distributions: Ubuntu, Debian and Raspbian
+
+If you want to run the SDK on a non Debian distribution, unpack
+the .deb file and install the library and headers manually.
+
+ Dependencies
+--------------
+* GCC (>= 4.9) or a comparable compiler
+* libc (>= 2.23)
+* pthread
+* dbus (>= 1.6.8)
+* zlib (>= 1.2.8: i386 and arm64 only)
+* NEON CPU support (armhf only)
+* OpenGLES (>= 2.0) optional for GPU acceleration
+* Python (>= 3.0) optional for the Python bindings.
+
+ SDK Installation
+------------------
+
+To install the Scandit SDK you need to use the following command (please do not forget to specify the SDK version and the architecture):
+
+`$ sudo dpkg -i libscandit-barcodescanner-X.Y.Z-architecture.deb`
+
+The architecture you need to use depends on your system:
+- amd64 for 64bit x86 systems
+- i386 for 32bit x86 systems
+- armhf for the Raspberry Pi 2 or 3
+- armv6l for the Raspberry Pi Zero
+- arm64 for 64bit ARM systems such as the Nvidia Jetson TX2
+
+E.g. for a 64bit x86 Ubuntu desktop you have to run the following command:
+
+`$ sudo dpkg -i libscandit-barcodescanner-5.11.4-amd64.deb`
+
+ Sample Applications
+---------------------
+
+All sample applications are contained the samples directory and have the following dependencies:
+
+ * Camera samples: Video4Linux2 for camera access:
+ 
+    `$ sudo apt-get install libv4l-dev`
+    
+ * CommandLineBarcodeScannerImageProcessingSample: SDL2 for loading images.
+ 
+    `$ sudo apt-get install libsdl2-dev libsdl2-image-dev`
+    
+ * CommandLineBarcodeScannerImageProcessingSample.py: SDL2 for python3 also for image loading.
+ 
+    `$ sudo apt-get install python3-sdl2`
+    
+ * CommandLineBarcodeGeneratorSample: libpng for generating the output image.
+ 
+    `$ sudo apt-get install libpng-dev`
+
+Insert your license key to all sample source files.
+
+Compile:
+$ cd samples
+$ make
+
+Execute the image processing sample:
+$ ./CommandLineBarcodeScannerImageProcessingSample ean13-code.png
+
+Execute the camera sample:
+$ ./CommandLineBarcodeScannerCameraSample /dev/video0 640 480
+
+Execute the MatrixScan sample:
+$ ./CommandLineMatrixScanCameraSample /dev/video1 1920 1080
+
+Execute the barcode generator sample:
+$ ./CommandLineBarcodeGeneratorSample
+
+Execute the Python image processing sample:
+$ python3 CommandLineBarcodeScannerImageProcessingSample.py ean13-code.png
+
+ Raspberry Pi's
+----------------
+
+The SDK supports the Raspberry Pi 2, 3 and Zero. The camera has to support 
+Video4Linux2 (V4L2). The following steps are required to setup V4L2:
+
+$ sudo apt-get install v4l-utils
+
+Put bcm2835-v4l2  into /etc/modules-load.d/modules.conf
+Reboot the device.
